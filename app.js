@@ -1,14 +1,74 @@
+"use strict";
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var helmet = require('helmet');
+var session = require('express-session');
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+/* <<<<---- CONFIGURE PASSPORT ----->>> */
+
+/* CONFIGURE PASSPORT */
+var configurePassport = require('./js/authentication/passport-config');
+
+// Configure the passport
+configurePassport();
+
+/* <<<----- END OF PASSPORT CONFIGURE ------>>> */
+
+/* <<<--- REQUIRE ALL THE ROUTES --->>>> */
+
+var login = require('./routes/authentication/login'),
+    logged = require('./routes/authentication/logged'),
+    logout = require('./routes/authentication/logout'),
+    googleAuth = require('./routes/authentication/google-auth'),
+    account = require('./routes/account');
+
+/* <<<---- END OF ROUTE REQUIRES ----->>>> */
+
+
 var app = express();
+
+/* <<<---- HELMET CONFIG ---->>>> */
+
+app.use(helmet.contentSecurityPolicy({
+    defaultSrc: ["'self'", 'default.com'],
+    scriptSrc: ['scripts.com'],
+    styleSrc: ['style.com'],
+    imgSrc: ['img.com'],
+    connectSrc: ['connect.com'],
+    fontSrc: ['font.com'],
+    objectSrc: ['object.com'],
+    mediaSrc: ['media.com'],
+    frameSrc: ['frame.com'],
+    sandbox: ['allow-forms', 'allow-scripts'],
+    reportUri: '/report-violation',
+    reportOnly: false, // set to true if you only want to report errors
+    setAllHeaders: false, // set to true if you want to set all headers
+    disableAndroid: false, // set to true if you want to disable Android (browsers can vary and be buggy)
+    safari5: false // set to true if you want to force buggy CSP in Safari 5
+}));
+
+// Set same-origin policy
+app.use(helmet.frameguard('sameorigin'));
+
+// Change the powered by to something else
+app.use(helmet.hidePoweredBy({ setTo: 'PHP/5.6.5' }));
+
+// Prevent MIME sniffing
+app.use(helmet.noSniff());
+
+
+/* <<<---- END OF HELMET CONFIG ----> */
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,9 +81,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret : "secret_password",
+    resave : false,
+    saveUninitialized: true
+}));
+// Initialize the passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* <<<--- ROUTE DEFINITIONS HERE --->>> */
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/api/1/account', account);
+app.use('/api/1/login', login);
+app.use('/api/1/logout', logout);
+app.use('/api/1/logged', logged);
+app.use('/api/1/googleauth', googleAuth);
+
+/* <<<---- END OF ROUTE DEFINITIONS ----->>> */
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
