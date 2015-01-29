@@ -14,19 +14,21 @@ function configurePassport() {
 
     if (devEnv) {
         if (useHttps) {
-            callbackUrl = "https://127.0.0.1:8888/api/1/auth/google/callback";
+            callbackUrl = "https://127.0.0.1:5555/api/1/auth/google/callback";
         } else {
             // Plain HTTP
-            callbackUrl = "http://127.0.0.1:3000/api/1/auth/google/callback";
+            callbackUrl = "http://127.0.0.1:5555/api/1/auth/google/callback";
         }
     }
     // Production environment
     else {
         if (useHttps) {
             callbackUrl = "https://178.62.215.70:8888/api/1/auth/google/callback";
+            throw new Error("Production environment not configured!");
         } else {
             // Plain HTTP
             callbackUrl = "http://178.62.215.70:3000/api/1/auth/google/callback";
+            throw new Error("Production environment not configured!");
         }
 
     }

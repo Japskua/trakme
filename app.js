@@ -40,16 +40,16 @@ var app = express();
 
 app.use(helmet.contentSecurityPolicy({
     defaultSrc: ["'self'", 'default.com'],
-    scriptSrc: ['scripts.com'],
-    styleSrc: ['style.com'],
-    imgSrc: ['img.com'],
-    connectSrc: ['connect.com'],
-    fontSrc: ['font.com'],
-    objectSrc: ['object.com'],
-    mediaSrc: ['media.com'],
-    frameSrc: ['frame.com'],
-    sandbox: ['allow-forms', 'allow-scripts'],
-    reportUri: '/report-violation',
+    scriptSrc: ["'self'"],
+    styleSrc: ["'self'"],
+    imgSrc: ["'self'"],
+    connectSrc: ["'self'"],
+    fontSrc: ["'self'"],
+    objectSrc: ["'self'"],
+    mediaSrc: ["'self'"],
+    frameSrc: ["'self'"],
+    //sandbox: ['allow-forms', 'allow-scripts'],
+    //reportUri: '/report-violation',
     reportOnly: false, // set to true if you only want to report errors
     setAllHeaders: false, // set to true if you want to set all headers
     disableAndroid: false, // set to true if you want to disable Android (browsers can vary and be buggy)
@@ -98,7 +98,7 @@ app.use('/api/1/account', account);
 app.use('/api/1/login', login);
 app.use('/api/1/logout', logout);
 app.use('/api/1/logged', logged);
-app.use('/api/1/googleauth', googleAuth);
+app.use('/api/1/auth/google', googleAuth);
 
 /* <<<---- END OF ROUTE DEFINITIONS ----->>> */
 

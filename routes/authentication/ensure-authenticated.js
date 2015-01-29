@@ -9,7 +9,7 @@ function ensureAuthenticated(req, res, next) {
         return next();
     }
     // Otherwise, redirect
-    res.redirect('/login');
+    res.redirect('/api/1/login/');
 }
 
 module.exports = ensureAuthenticated;

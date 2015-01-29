@@ -77,4 +77,5 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
-
+# Don't share the google-info.js as it contains credentials information
+js/authentication/google-info.js

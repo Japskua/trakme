@@ -43,7 +43,7 @@ router.get('/', ensureAuthenticated, function(req, res){
     function authDone(req, res) {
 
         // Then, just redirect somewhere
-        res.redirect("/athlete");
+        res.redirect('/');
     }
 });
 
