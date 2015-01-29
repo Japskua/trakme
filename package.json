@@ -1,0 +1,40 @@
+{
+  "name": "trakme",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.10.1",
+    "cookie-parser": "~1.3.3",
+    "debug": "~2.1.1",
+    "ejs": "~2.1.4",
+    "express": "~4.11.0",
+    "morgan": "~1.5.1",
+    "serve-favicon": "~2.2.0",
+    "async": "^0.9.0",
+    "compression": "~1.3.0",
+    "express": "~4.11.0",
+    "express-handlebars": "~1.1.0",
+    "helmet": "^0.6.0",
+    "moment": "^2.9.0",
+    "mongoose": "~3.8.20",
+    "morgan": "~1.5.0",
+    "passport": "^0.2.1",
+    "passport-facebook": "^1.0.3",
+    "passport-google": "^0.3.0",
+    "passport-twitter": "^1.0.2",
+    "serve-favicon": "~2.2.0",
+    "underscore": "^1.7.0",
+    "winston": "^0.8.3"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.10",
+    "gulp-livereload": "~3.4.0",
+    "gulp-nodemon": "~1.0.4",
+    "gulp-ruby-sass": "~0.7.1",
+    "mocha": "^2.1.0",
+    "should": "^4.6.2"
+  }
+}
