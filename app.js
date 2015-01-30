@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var helmet = require('helmet');
 var session = require('express-session');
 var passport = require('passport');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -66,9 +67,12 @@ app.use(helmet.hidePoweredBy({ setTo: 'PHP/5.6.5' }));
 app.use(helmet.noSniff());
 
 
-/* <<<---- END OF HELMET CONFIG ----> */
+/* <<<---- END OF HELMET CONFIG ---->>> */
 
+/* <<<--- DATABASE CONNECTION ------>>> */
+mongoose.connect('mongodb://localhost/trakme');
 
+/* <<<--- END OF DATABASE CONNECTION ------>>>> */
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
