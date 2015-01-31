@@ -4,6 +4,7 @@
 "use strict";
 
 var Chance = require('chance');
+var moment = require('moment');
 
 function DummyCreator() {
     this.chance = new Chance();
@@ -51,5 +52,19 @@ DummyCreator.prototype.createTestUser = function() {
     };
 };
 
+
+/**
+ * Creates a test feelings entry
+ * @param {String} userId userId to use with the entry
+ * @returns {Object} The newly created random entry object
+ */
+DummyCreator.prototype.createTestFeelings = function(userId) {
+    return {
+        userId : userId,
+        feelings : this.chance.integer({ min : 1, max : 3}),
+        comment : this.chance.sentence({ words : 5}),
+        date : moment().format('YYYY-MM-DD')
+    };
+};
 
 module.exports = DummyCreator;

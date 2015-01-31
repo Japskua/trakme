@@ -36,7 +36,7 @@ UserDb.prototype.removeUser = function(queryJson, callback) {
         return;
     }
 
-    // Try to update the user
+    // Make the model for removal
     var User = mongoose.model('User', userSchema);
     // And execute
     User.findOneAndRemove(queryJson, callback);
@@ -86,7 +86,6 @@ UserDb.prototype.createUser = function(userJson, callback) {
     user.locale = userJson.locale;
     user.registerDate = moment().format();
     user.lastLogin = moment().format();
-    user.updated = moment().format();
 
     // Then save
     user.save(callback);

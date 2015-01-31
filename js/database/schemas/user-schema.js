@@ -5,8 +5,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var moment = require('moment');
-
-var emailsSchema = new Schema({ email : String});
+var lastModifiedPlugin = require('./plugins/last-modified-plugin');
 
 var userSchema = new Schema({
     googleId : String,
@@ -19,8 +18,10 @@ var userSchema = new Schema({
     gender : String,
     locale : String,
     registerDate : { type : Date, default : moment().format()},
-    lastLogin : { type : Date, default : moment().format()},
-    updated : { type : Date, default : moment().format()}
+    lastLogin : { type : Date, default : moment().format()}
 });
+
+// Add the plugin, indexing the last modified
+userSchema.plugin(lastModifiedPlugin, { index : true});
 
 module.exports = userSchema;
