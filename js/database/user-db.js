@@ -13,10 +13,61 @@ function UserDb() {
 
 }
 
+
+UserDb.prototype.findUser = function(queryJson, callback) {
+    // Check that the queryJson is not empty
+    if(!queryJson) {
+        winston.error("UserDb.findUser() - queryJson was empty");
+        callback("query JSON was empty", null);
+        return;
+    }
+
+    // Okay, try to find the user
+    var User = mongoose.model('User', userSchema);
+    User.findOne(queryJson, callback);
+
+};
+
+UserDb.prototype.removeUser = function(queryJson, callback) {
+    // First, check that the queryJson is not empty
+    if(!queryJson) {
+        winston.error("UserDb.removeUser() - queryJson was empty");
+        callback("query JSON was empty", null);
+        return;
+    }
+
+    // Try to update the user
+    var User = mongoose.model('User', userSchema);
+    // And execute
+    User.findOneAndRemove(queryJson, callback);
+};
+
+
+UserDb.prototype.updateUser = function(queryJson, updateJson, callback) {
+    // First, check that the queryJson is not empty
+    if(!queryJson) {
+        winston.error("UserDb.updateUser() - queryJson was empty");
+        callback("query JSON was empty", null);
+        return;
+    }
+    // Also, make sure that the updateJson is not empty
+    if(!updateJson) {
+        winston.error("UserDb.updateUser() - updateJson was empty");
+        callback("update JSON was empty", null);
+        return;
+    }
+
+    // Try to update the user
+    var User = mongoose.model('User', userSchema);
+
+    User.findOneAndUpdate(queryJson, updateJson, callback);
+};
+
 UserDb.prototype.createUser = function(userJson, callback) {
     // Check that the userJson is not empty
     if (!userJson) {
-        winston.error("User.createUser() - userJson was empty");
+        winston.error("UserDb.createUser() - userJson was empty");
+        callback("create user information was empty", null);
         return;
     }
 
@@ -39,10 +90,6 @@ UserDb.prototype.createUser = function(userJson, callback) {
 
     // Then save
     user.save(callback);
-};
-
-UserDb.prototype.getUser = function() {
-
 };
 
 module.exports = UserDb;

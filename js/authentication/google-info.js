@@ -3,8 +3,8 @@
  */
 "use strict";
 function GoogleInfo() {
-    this.GOOGLE_CLIENT_ID = "";
-    this.GOOGLE_CLIENT_SECRET = "";
+    this.GOOGLE_CLIENT_ID = "942679974100-hoa59suq1nlbqs3npdc3mmialmnlh0js.apps.googleusercontent.com";
+    this.GOOGLE_CLIENT_SECRET = "HaQ5i5e7xUZ_-PaMnupLUFwj";
 }
 
 /**
