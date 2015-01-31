@@ -10,7 +10,13 @@ function UserManager () {
 
 }
 
-UserManager.prototype.getUserOrCreateIfNotExists = function(serviceType, json) {
+/**
+ * Gets the user from the database or creates one if not found
+ * @param {String} serviceType Type of the service got ("facebook" / "google")
+ * @param {Object} json
+ * @param {Function} callback
+ */
+UserManager.prototype.getUserOrCreateIfNotExists = function(serviceType, json, callback) {
     switch(serviceType) {
         case "facebook":
             this.findUserFacebook(json, function(err, user) {
@@ -22,19 +28,18 @@ UserManager.prototype.getUserOrCreateIfNotExists = function(serviceType, json) {
                     json.facebookAdded = true;
                     json.facebookVerified = json._json.verified;
 
-
-                    new UserManager().createNewUser(json);
+                    // Create the user
+                    new UserManager().createNewUser(json, callback);
                     return;
                 }
-                console.log("result of finding user from facebook:", user);
-
+                // Return the found user information
+                callback(null, user);
             });
             break;
         case "google":
             this.findUserGoogle(json, function(err, user) {
                 if(!user) {
                     // No user found, so need to create a new user
-
                     json.googleAdded = true;
                     json.googleId = json.id;
                     json.locale = json._json.locale;
@@ -42,34 +47,48 @@ UserManager.prototype.getUserOrCreateIfNotExists = function(serviceType, json) {
                     json.plusLink = json._json.link;
                     json.gender = json._json.gender;
 
-                    new UserManager().createNewUser(json);
+                    new UserManager().createNewUser(json, callback);
                     return;
                 }
-
-                console.log("Results of finding user from google:", user);
+                // Return the found user information
+                callback(null, user);
             });
             break;
         default :
             winston.error("UserManager.getUserOrCreateIfNotExists() - serviceType was unrecognized: " + serviceType.toString());
+            callback("User finding went wrong", null);
             break;
     }
 };
 
+/**
+ * Finds the given user based on received facebook credentials
+ * @param {Object} json
+ * @param {Function} callback
+ */
 UserManager.prototype.findUserFacebook = function(json, callback) {
     var userDb = new UserDb();
     userDb.findUser({ facebookId : json.id}, callback);
 };
 
+/**
+ * Finds the given user based on received google credentials
+ * @param {Object} json
+ * @param {Function} callback
+ */
 UserManager.prototype.findUserGoogle = function(json, callback) {
     var userDb = new UserDb();
     userDb.findUser({ googleId : json.id}, callback);
 };
 
-UserManager.prototype.createNewUser = function(json) {
+/**
+ * Creates a new user with the given information
+ * @param {Object} json
+ * @param {Function} callback
+ */
+UserManager.prototype.createNewUser = function(json, callback) {
     var userDb = new UserDb();
-    userDb.createUser(json, function(err, result) {
-    });
-
+    userDb.createUser(json, callback);
 };
 
 UserManager.prototype.linkNewService = function(serviceType, json) {

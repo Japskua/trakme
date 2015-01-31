@@ -86,8 +86,14 @@ function configurePassport() {
 
                 // Create a new user or find it if not exists
                 var userManager = new UserManager();
-                userManager.getUserOrCreateIfNotExists("google", profile);
-                return done(null, profile);
+                userManager.getUserOrCreateIfNotExists("google", profile, function(err, result) {
+                    if (err) {
+                        return done(err, null);
+                    }
+                    // Things okay
+                    return done(null, profile);
+                });
+
             });
         }
     ));
@@ -119,9 +125,13 @@ function configurePassport() {
 
                 // Create a new user or find it if not exists
                 var userManager = new UserManager();
-                userManager.getUserOrCreateIfNotExists("facebook", profile);
-
-                return done(null, profile);
+                userManager.getUserOrCreateIfNotExists("facebook", profile, function(err, result) {
+                    if (err) {
+                        return done(err, null);
+                    }
+                    // Things okay
+                    return done(null, profile);
+                });
             });
         }
     ));
