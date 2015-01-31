@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-<body>
+<% include header %>
+
+
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
 
@@ -14,9 +10,16 @@
 <h2>Hello, <%= user.displayName %>.</h2>
 <% } %>
 
-<a href="/api/1/account/">Account</a>
-<p></p>
-<a href="/api/1/logout/">Log out</a>
+<div id="navigation">
+    <a href="/api/1/account/">Account</a>
+    <p></p>
+    <a href="/api/1/feelings/">Feelings</a>
+    <p></p>
+    <a href="/api/1/logout/">Log out</a>
+</div>
 
-</body>
-</html>
+<div id="my-content">
+
+
+</div>
+<% include footer %>

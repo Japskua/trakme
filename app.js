@@ -31,7 +31,8 @@ var login = require('./routes/authentication/login'),
     logout = require('./routes/authentication/logout'),
     googleAuth = require('./routes/authentication/google-auth'),
     facebookAuth = require('./routes/authentication/facebook-auth'),
-    account = require('./routes/account');
+    account = require('./routes/account'),
+    feelingsRoute = require('./routes/feelings');
 
 /* <<<---- END OF ROUTE REQUIRES ----->>>> */
 
@@ -42,7 +43,7 @@ var app = express();
 
 app.use(helmet.contentSecurityPolicy({
     defaultSrc: ["'self'", 'default.com'],
-    scriptSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-eval'"],
     styleSrc: ["'self'"],
     imgSrc: ["'self'"],
     connectSrc: ["'self'"],
@@ -105,6 +106,7 @@ app.use('/api/1/logout', logout);
 app.use('/api/1/logged', logged);
 app.use('/api/1/auth/google', googleAuth);
 app.use('/api/1/auth/facebook', facebookAuth);
+app.use('/api/1/feelings', feelingsRoute);
 
 
 /* <<<---- END OF ROUTE DEFINITIONS ----->>> */
