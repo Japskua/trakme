@@ -6,7 +6,8 @@ var passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GoogleInfo = require('./google-info'),
-    FacebookInfo = require('./facebook-info');
+    FacebookInfo = require('./facebook-info'),
+    UserManager = require('./../user-manager');
 
 function configurePassport() {
 
@@ -82,6 +83,10 @@ function configurePassport() {
                 console.log("refreshToken:", refreshToken);
                 console.log("profile:", profile);
                 profile.token = accessToken;
+
+                // Create a new user or find it if not exists
+                var userManager = new UserManager();
+                userManager.getUserOrCreateIfNotExists("google", profile);
                 return done(null, profile);
             });
         }
@@ -108,7 +113,14 @@ function configurePassport() {
                 console.log("accessToken:", accessToken);
                 console.log("refreshToken:", refreshToken);
                 console.log("profile:", profile);
+
+                // Set the profile token
                 profile.token = accessToken;
+
+                // Create a new user or find it if not exists
+                var userManager = new UserManager();
+                userManager.getUserOrCreateIfNotExists("facebook", profile);
+
                 return done(null, profile);
             });
         }
