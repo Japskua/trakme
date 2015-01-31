@@ -79,3 +79,5 @@ node_modules
 
 # Don't share the google-info.js as it contains credentials information
 js/authentication/google-info.js
+# Or facebook-info
+js/authentication/facebook-info.js

@@ -105,6 +105,10 @@ function configurePassport() {
                 // represent the logged-in user.  In a typical application, you would want
                 // to associate the Facebook account with a user record in your database,
                 // and return that user instead.
+                console.log("accessToken:", accessToken);
+                console.log("refreshToken:", refreshToken);
+                console.log("profile:", profile);
+                profile.token = accessToken;
                 return done(null, profile);
             });
         }

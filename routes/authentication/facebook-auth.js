@@ -14,10 +14,11 @@ var passport = require('passport');
 
 /* GET /api/1/auth/facebook/ */
 router.get('/',
-    passport.authenticate('facebook',
+    passport.authenticate('facebook'/*,
         { scope: ['read_stream',     // Read user stream
                   'publish_actions'  // Publish on behalf the user
-        ]}),
+        ]}*/
+    ),
     function(req, res){
         // The request will be redirected to Facebook for authentication, so this
         // function will not be called.
