@@ -4,30 +4,37 @@
 "use strict";
 var passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-    GoogleInfo = require('./google-info');
+    FacebookStrategy = require('passport-facebook').Strategy,
+    GoogleInfo = require('./google-info'),
+    FacebookInfo = require('./facebook-info');
 
 function configurePassport() {
 
     var devEnv = true;
     var useHttps = false;
-    var callbackUrl;
+    var callbackUrlGoogle;
+    var callbackUrlFacebook;
 
     if (devEnv) {
         if (useHttps) {
-            callbackUrl = "https://127.0.0.1:5555/api/1/auth/google/callback";
+            callbackUrlGoogle = "https://127.0.0.1:5555/api/1/auth/google/callback";
+            callbackUrlFacebook = "https://localhost:5555/api/1/auth/facebook/callback";
         } else {
             // Plain HTTP
-            callbackUrl = "http://127.0.0.1:5555/api/1/auth/google/callback";
+            callbackUrlGoogle = "http://127.0.0.1:5555/api/1/auth/google/callback";
+            callbackUrlFacebook = "http://127.0.0.1:5555/api/1/auth/facebook/callback";
         }
     }
     // Production environment
     else {
         if (useHttps) {
-            callbackUrl = "https://178.62.215.70:8888/api/1/auth/google/callback";
+            callbackUrlGoogle = "https://178.62.215.70:5555/api/1/auth/google/callback";
+            callbackUrlFacebook = "https://178.62.215.70:5555/api/1/auth/facebook/callback";
             throw new Error("Production environment not configured!");
         } else {
             // Plain HTTP
-            callbackUrl = "http://178.62.215.70:3000/api/1/auth/google/callback";
+            callbackUrlGoogle = "http://178.62.215.70:5555/api/1/auth/google/callback";
+            callbackUrlFacebook = "http://178.62.215.70:5555/api/1/auth/facebook/callback";
             throw new Error("Production environment not configured!");
         }
 
@@ -36,6 +43,7 @@ function configurePassport() {
     // API Access link for creating client ID and secret:
     // https://code.google.com/apis/console/
     var googleInfo = new GoogleInfo();
+    var facebookInfo = new FacebookInfo();
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -44,11 +52,11 @@ function configurePassport() {
 //   the user by ID when deserializing.  However, since this example does not
 //   have a database of user records, the complete Google profile is
 //   serialized and deserialized.
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user);
     });
 
-    passport.deserializeUser(function(obj, done) {
+    passport.deserializeUser(function (obj, done) {
         done(null, obj);
     });
 
@@ -60,9 +68,9 @@ function configurePassport() {
     passport.use(new GoogleStrategy({
             clientID: googleInfo.ClientId(),
             clientSecret: googleInfo.ClientSecret(),
-            callbackURL: callbackUrl
+            callbackURL: callbackUrlGoogle
         },
-        function(accessToken, refreshToken, profile, done) {
+        function (accessToken, refreshToken, profile, done) {
             // asynchronous verification, for effect...
             process.nextTick(function () {
 
@@ -74,6 +82,29 @@ function configurePassport() {
                 console.log("refreshToken:", refreshToken);
                 console.log("profile:", profile);
                 profile.token = accessToken;
+                return done(null, profile);
+            });
+        }
+    ));
+
+
+// Use the FacebookStrategy within Passport.
+//   Strategies in Passport require a `verify` function, which accept
+//   credentials (in this case, an accessToken, refreshToken, and Facebook
+//   profile), and invoke a callback with a user object.
+    passport.use(new FacebookStrategy({
+            clientID: facebookInfo.FACEBOOK_CLIENT_ID,
+            clientSecret: facebookInfo.FACEBOOK_CLIENT_SECRET,
+            callbackURL: callbackUrlFacebook
+        },
+        function (accessToken, refreshToken, profile, done) {
+            // asynchronous verification, for effect...
+            process.nextTick(function () {
+
+                // To keep the example simple, the user's Facebook profile is returned to
+                // represent the logged-in user.  In a typical application, you would want
+                // to associate the Facebook account with a user record in your database,
+                // and return that user instead.
                 return done(null, profile);
             });
         }

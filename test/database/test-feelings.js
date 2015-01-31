@@ -8,7 +8,7 @@ var UserDb = require('./../../js/database/user-db');
 var FeelingsDb = require('./../../js/database/feelings-db');
 var DummyUserCreator = require('./../data-generation/dummy-user-creator');
 
-describe.only('Database test for user functions', function() {
+describe('Database test for user functions', function() {
 
     // Initialize the dummy user creator
     var dummyUserCreator = new DummyUserCreator();

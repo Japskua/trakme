@@ -30,6 +30,7 @@ var login = require('./routes/authentication/login'),
     logged = require('./routes/authentication/logged'),
     logout = require('./routes/authentication/logout'),
     googleAuth = require('./routes/authentication/google-auth'),
+    facebookAuth = require('./routes/authentication/facebook-auth'),
     account = require('./routes/account');
 
 /* <<<---- END OF ROUTE REQUIRES ----->>>> */
@@ -103,6 +104,8 @@ app.use('/api/1/login', login);
 app.use('/api/1/logout', logout);
 app.use('/api/1/logged', logged);
 app.use('/api/1/auth/google', googleAuth);
+app.use('/api/1/auth/facebook', facebookAuth);
+
 
 /* <<<---- END OF ROUTE DEFINITIONS ----->>> */
 

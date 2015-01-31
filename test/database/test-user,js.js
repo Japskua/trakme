@@ -8,7 +8,7 @@ var moment = require('moment');
 var UserDb = require('./../../js/database/user-db');
 var DummyUserCreator = require('./../data-generation/dummy-user-creator');
 
-describe.skip('Database test for user functions', function() {
+describe('Database test for user functions', function() {
 
     // Initialize the dummy user creator
     var dummyUserCreator = new DummyUserCreator();
