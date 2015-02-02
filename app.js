@@ -44,7 +44,7 @@ var app = express();
 app.use(helmet.contentSecurityPolicy({
     defaultSrc: ["'self'", 'default.com'],
     scriptSrc: ["'self'", "'unsafe-eval'"],
-    styleSrc: ["'self'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
     imgSrc: ["'self'"],
     connectSrc: ["'self'"],
     fontSrc: ["'self'"],

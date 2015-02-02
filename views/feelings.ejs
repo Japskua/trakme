@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title><%-title %></title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
 
-<% if (!user) { %>
-<h2>Welcome! Please log in.</h2>
-<% } else { %>
-<h2>Hello, <%= user.displayName %>.</h2>
-<% } %>
+<p> Before the feelings-container</p>
+<div id="content">
 
-<a href="/api/1/account/">Account</a>
-<p></p>
-<a href="/api/1/logout/">Log out</a>
+</div>
 
+<script type="text/javascript" src="/js/libs/require.js" data-main="/js/main.js"></script>
 </body>
 </html>
