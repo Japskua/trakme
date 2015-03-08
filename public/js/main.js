@@ -20,14 +20,19 @@ require.config({
         bootstrap: {
             deps: ['jquery'],
             exports: 'Bootstrap'
+        },
+        materialize : {
+            deps : ['jquery'],
+            exports : 'Materialize'
         }
     },
     paths: {
-        jquery:     'libs/jquery-2.1.3.min',
-        backbone:   'libs/backbone.min',
+        jquery:     '../components/jquery/dist/jquery.min',
+        backbone:   '../components/backbone/backbone',
         bootstrap:  'libs/bootstrap.min',
-        underscore: 'libs/underscore-min',
-        moment:     'libs/moment-with-locales.min'
+        underscore: '../components/underscore/underscore-min',
+        moment:     '../components/moment/min/moment-with-locales.min',
+        materialize: '../components/materialize/dist/js/materialize.min'
     }
 });
 

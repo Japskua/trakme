@@ -1,25 +1,13 @@
 <% include header %>
 
 
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-
 <% if (!user) { %>
 <h2>Welcome! Please log in.</h2>
 <% } else { %>
 <h2>Hello, <%= user.displayName %>.</h2>
 <% } %>
 
-<div id="navigation">
-    <a href="/api/1/account/">Account</a>
-    <p></p>
-    <a href="/api/1/feelings/">Feelings</a>
-    <p></p>
-    <a href="/api/1/logout/">Log out</a>
-</div>
-
 <div id="content">
-
 
 </div>
 <% include footer %>

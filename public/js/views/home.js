@@ -2,11 +2,12 @@
  * Created by Janne on 31.1.2015.
  */
 "use strict";
-define(['backbone',
+define(['jquery',
+        'backbone',
         'bootstrap',
         'events',
         'text!templates/home.html'],
-    function(Backbone, Bootstrap, Events, Template) {
+    function($, Backbone, Bootstrap, Events, Template) {
 
         return Backbone.View.extend({
             initialize : function() {
@@ -24,6 +25,10 @@ define(['backbone',
                 'click #trakme-go-feelings' : function() {
                     console.log("Click!");
                     Events.trigger('router:navigate', {url : '#feelings'});
+                },
+                'click #trakme-modal' : function() {
+                    console.log("Modal clicked!");
+                    $('#modal1').openModal();
                 }
             },
             close : function() {

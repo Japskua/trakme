@@ -5,13 +5,15 @@
 define(['backbone',
         'events',
         'views/home',
-        'views/feelings'],
-    function (Backbone, Events, HomeView, FeelingsView) {
+        'views/feelings',
+        'views/account'],
+    function (Backbone, Events, HomeView, FeelingsView, AccountView) {
 
         return Backbone.Router.extend({
             routes: {
                 "": "home",
-                "feelings" : "feelings"
+                "feelings" : "feelings",
+                "account" : "account"
             },
             initialize: function() {
                 var self = this;
@@ -41,6 +43,13 @@ define(['backbone',
                     this.feelingsView = new FeelingsView();
                 }
                 $('#content').html(this.feelingsView.render().el);
+            },
+            account : function() {
+                console.log("Account View!");
+                if(!this.accountView) {
+                    this.accountView = new AccountView();
+                }
+                $('#content').html(this.accountView.render().el);
             }
         });
     });
