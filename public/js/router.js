@@ -4,10 +4,11 @@
 "use strict";
 define(['backbone',
         'events',
+        'data-manager',
         'views/home',
         'views/feelings',
         'views/account'],
-    function (Backbone, Events, HomeView, FeelingsView, AccountView) {
+    function (Backbone, Events, DataManager, HomeView, FeelingsView, AccountView) {
 
         return Backbone.Router.extend({
             routes: {
@@ -21,6 +22,10 @@ define(['backbone',
                 //this.headerView.render();
                 //this.footerView = new FooterView();
                 //this.footerView.render();
+
+                this.dataManager = new DataManager();
+
+                this.accountView = new AccountView({ dataManager : this.dataManager});
 
                 // Listener for navigation events on all views
                 Events.on('router:navigate', function(params) {
