@@ -12,7 +12,7 @@ define(['backbone',
             initialize : function(params) {
 
                 this.dataManager = params.dataManager;
-
+                this.isCurrentView = false;
                 console.log("Account initialized");
                 var self = this;
 
