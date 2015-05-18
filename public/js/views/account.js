@@ -18,14 +18,24 @@ define(['backbone',
 
                 // Fetch the current account details from the backend
                 this.retrieveAccounts();
+                this.childViews = [];
+
+                this.render();
 
             },
             template : _.template(Template),
 
             render : function() {
+                var self = this;
                 console.log("Account render() here!");
                 this.$el.html(this.template({ title : "Account-page"}));
+                this.$el.hide();
+                $('#main-container').append(this.el);
 
+                // Render children, if any
+                _.forEach(this.childViews, function(child) {
+                    child.render();
+                });
                 return this;
             },
 

@@ -10,14 +10,26 @@ define(['jquery',
     function($, Backbone, Bootstrap, Events, Template) {
 
         return Backbone.View.extend({
-            initialize : function() {
+            initialize : function(params) {
                 var self = this;
+                this.dataManager = params.dataManager;
+
+                this.isCurrentView = false;
+
+                this.childViews = [];
+
+                this.render();
             },
             template : _.template(Template),
 
             render : function() {
-
                 this.$el.html(this.template({ title : "tester-title"}));
+                this.$el.hide();
+                $('#main-container').append(this.el);
+
+                _.forEach(this.childViews, function(child) {
+                    child.render();
+                });
 
                 return this;
             },

@@ -25,6 +25,7 @@ define(['backbone',
 
                 this.dataManager = new DataManager();
 
+                this.homeView = new HomeView({ dataManager : this.dataManager});
                 this.accountView = new AccountView({ dataManager : this.dataManager});
                 this.feelingsView = new FeelingsView({ dataManager : this.dataManager});
 
@@ -38,21 +39,22 @@ define(['backbone',
 
             },
             home: function() {
-                $('#content').html(this.homeView.render().el);
+                console.log("Home!");
+                if(!this.homeView.isCurrentView) {
+                    this.changeView(this.homeView);
+                }
             },
             feelings : function() {
                 console.log("Feelings!");
                 if(!this.feelingsView.isCurrentView) {
                     this.changeView(this.feelingsView);
                 }
-                //$('#content').html(this.feelingsView.render().el);
             },
             account : function() {
                 console.log("Account View!");
                 if(!this.accountView.isCurrentView) {
                     this.changeView(this.accountView);
                 }
-                $('#content').html(this.accountView.render().el);
             },
             changeView: function(nextView) {
                 var self = this;

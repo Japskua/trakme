@@ -15,6 +15,8 @@ define(['backbone',
                 this.isCurrentView = false;
                 this.dataManager = params.dataManager;
 
+                this.childViews = [];
+
                 // Render
                 this.render();
             },
@@ -86,6 +88,9 @@ define(['backbone',
                 $('#main-container').append(this.el);
 
                 // Render childs (if any)
+                _.forEach(this.childViews, function(child) {
+                    child.render();
+                });
 
                 return this;
             },
