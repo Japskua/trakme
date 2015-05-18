@@ -13,7 +13,7 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var cors = require('cors');
 /* <<<<---- CONFIGURE PASSPORT ----->>> */
 
 /* CONFIGURE PASSPORT */
@@ -46,7 +46,7 @@ app.use(helmet.contentSecurityPolicy({
     scriptSrc: ["'self'", "'unsafe-eval'"],
     styleSrc: ["'self'", "'unsafe-inline'"],
     imgSrc: ["'self'"],
-    connectSrc: ["'self'"],
+    connectSrc: ["http://localhost:5555", "'self'"],
     fontSrc: ["'self'"],
     objectSrc: ["'self'"],
     mediaSrc: ["'self'"],
@@ -75,6 +75,8 @@ app.use(helmet.noSniff());
 mongoose.connect('mongodb://localhost/trakme');
 
 /* <<<--- END OF DATABASE CONNECTION ------>>>> */
+
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

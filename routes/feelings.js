@@ -14,10 +14,24 @@ router.get('/', ensureAuthenticated, function(req, res) {
 });
 
 /* POST /api/1/feelings */
-router.post('/', ensureAuthenticated, function(req, res) {
+router.post('/', function(req, res) {
     // Check that the feelingsJSON is properly formatted
-    console.log(req.body.feelingsJson);
-    res.json(200).send({ message : "ok"});
+    if (!req.body) {
+        res.json(400).send({ error : "Message body was missing!"});
+        return;
+    }
+    // Read the feelings object
+    var feelingsObj = req.body;
+    // Write it to the database
+    var feelingsDb = new FeelingsDb();
+    feelingsDb.createFeelings(feelingsObj, function(err, result) {
+        if (err) {
+            res.json(400).send({ error : err});
+            return;
+        }
+
+        res.json(200).send({ message : result});
+    });
 });
 
 module.exports = router;
